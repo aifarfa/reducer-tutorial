@@ -36,7 +36,8 @@ const scaleY = action => action.type === 'UP' ? action.value : -action.value
 
 const dispatch = (state, actions) => {
 
-  let initialState = state || {
+  let current = state || {}
+  let position = current.position || {
     x: 0,
     y: 0
   }
@@ -57,8 +58,11 @@ const dispatch = (state, actions) => {
 
   // return actions.reduce(reducer, initialState)
   return {
-    x: initialState.x + vectorX,
-    y: initialState.y + vectorY
+    // history: state.history,
+    position: {
+      x: position.x + vectorX,
+      y: position.y + vectorY
+    }
   }
 }
 

@@ -23,29 +23,32 @@ describe('reducer in action!', () => {
 
   beforeEach(() => {
     this.initialState = {
-      x: 0,
-      y: 0
+      history: [],
+      position: {
+        x: 0,
+        y: 0
+      }
     }
   })
 
   it('returns correct final state', () => {
     let lastState = dispatch(this.initialState, actions)
 
-    expect(lastState.x).to.eq(3)
-    expect(lastState.y).to.eq(-1)
+    expect(lastState.position.x).to.eq(3)
+    expect(lastState.position.y).to.eq(-1)
   })
 
   it('is immutable state', () => {
     let lastState = dispatch(this.initialState, actions)
     expect(this.initialState).to.not.eq(lastState)
-    expect(this.initialState.x).to.eq(0)
-    expect(this.initialState.y).to.eq(0)
+    expect(this.initialState.position.x).to.eq(0)
+    expect(this.initialState.position.y).to.eq(0)
   })
 
   it('has default state {0, 0}', () => {
     let lastState = dispatch(null, actions)
-    expect(lastState.x).to.eq(3)
-    expect(lastState.y).to.eq(-1)
+    expect(lastState.position.x).to.eq(3)
+    expect(lastState.position.y).to.eq(-1)
   })
 
 });
