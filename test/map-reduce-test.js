@@ -51,4 +51,16 @@ describe('reducer in action!', () => {
     expect(lastState.position.y).to.eq(-1)
   })
 
+  it('store historical movement', () => {
+    let lastState = dispatch(this.initialState, actions)
+    let history = lastState.history
+
+    // console.log(history)
+    expect(history.length).to.eq(4)
+    expect(history[0].x).to.eq(0)
+    expect(history[1].x).to.eq(0)
+    expect(history[2].x).to.eq(2)
+    expect(history[3].x).to.eq(2)
+  })
+
 });
