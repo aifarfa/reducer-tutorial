@@ -1,5 +1,5 @@
 'use strict'
-const assign = require('object-assign')
+const _ = require('lodash')
 
 const defaultState = {
   history: [],
@@ -18,55 +18,49 @@ const cloneState = state => {
     }
   }
 }
-
-const reducer = (state, action) => {
-  let nextState = cloneState(state)
+const movement = ['UP', 'DOWN', 'LEFT', 'RIGHT']
+const isMoving = type => _.includes(movement, type)
+const move = (state, action) => {
+  // clone obj
+  let nextState = {
+    x: state.x,
+    y: state.y
+  }
 
   switch (action.type) {
     case 'LEFT':
-      nextState.position.x -= action.value
+      nextState.x -= action.value
       break;
     case 'RIGHT':
-      nextState.position.x += action.value
+      nextState.x += action.value
       break;
     case 'UP':
-      nextState.position.y += action.value
+      nextState.y += action.value
       break;
     case 'DOWN':
-      nextState.position.y -= action.value
+      nextState.y -= action.value
       break;
     default:
       break;
   }
-  // console.log(nextState.position)
-  nextState.history.push(state.position)
-
   return nextState;
 }
 
-// const isVertical = action => _.includes(['UP', 'DOWN'], action.type)
-// const isHorizontal = action => _.includes(['LEFT', 'RIGHT'], action.type)
+const reducer = (state, action) => {
+  let nextState = cloneState(state)
 
-// const scaleX = action => action.type === 'RIGHT' ? action.value : -action.value
-// const scaleY = action => action.type === 'UP' ? action.value : -action.value
+  if (isMoving(action.type)) {
+    let position = nextState.position // select sub state
+    let nextPosition = move(position, action) // parse to movement reducer
+    nextState.position = nextPosition
+    nextState.history.push(state.position)
+  }
+
+  return nextState
+}
 
 const dispatch = (actions) => {
-  const state = {} // TODO: retrieve state from store..
-  const initialState = assign(state, defaultState)
-
-  // const addDistance = (current, value) => current + value
-  // const vectorX = actions
-  //   .filter(isHorizontal)
-  //   .map(scaleX)
-  //   .reduce(addDistance, 0)
-
-  // const vectorY = actions
-  //   .filter(isVertical)
-  //   .map(scaleY)
-  //   .reduce(addDistance, 0)
-
-  // console.log('move X ->', vectorX)
-  // console.log('move Y ->', vectorY)
+  const initialState = defaultState // TODO: retrieve state from store..
   const nextState = actions.reduce(reducer, initialState)
   return nextState
 }
