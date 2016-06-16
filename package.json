@@ -1,0 +1,25 @@
+{
+  "name": "functional-redux-tutorial",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/*.js",
+    "test:watch": "mocha test/**/*.js --watch"
+  },
+  "keywords": [
+    "javascript",
+    "functional",
+    "design-pattern"
+  ],
+  "author": "@aifarfa",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
+  }
+}
