@@ -1,7 +1,10 @@
 'use strict'
 
 const reducer = (state, action) => {
-  let nextState = state
+  let nextState = {
+    x: state.x,
+    y: state.y
+  }
 
   switch (action.type) {
     case 'LEFT':
@@ -19,7 +22,7 @@ const reducer = (state, action) => {
     default:
       break;
   }
-  console.log(action.type, action.value)
+  // console.log(action.type, action.value)
   console.log(nextState)
   return nextState;
 }

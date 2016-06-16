@@ -35,7 +35,7 @@ describe('reducer in action!', () => {
     expect(lastState.y).to.eq(-1)
   })
 
-  xit('is immutable state', () => {
+  it('is immutable state', () => {
     let lastState = dispatch(this.initialState, actions)
     expect(this.initialState).to.not.eq(lastState)
     expect(this.initialState.x).to.eq(0)
