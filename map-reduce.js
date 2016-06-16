@@ -50,8 +50,8 @@ const reducer = (state, action) => {
 // const scaleX = action => action.type === 'RIGHT' ? action.value : -action.value
 // const scaleY = action => action.type === 'UP' ? action.value : -action.value
 
-const dispatch = (state, actions) => {
-  state = state || {}
+const dispatch = (actions) => {
+  const state = {} // TODO: retrieve state from store..
   const initialState = assign(state, defaultState)
 
   // const addDistance = (current, value) => current + value
