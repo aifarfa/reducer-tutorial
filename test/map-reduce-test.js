@@ -42,7 +42,7 @@ describe('reducer in action!', () => {
     expect(this.initialState.y).to.eq(0)
   })
 
-  xit('has default state {0, 0}', () => {
+  it('has default state {0, 0}', () => {
     let lastState = dispatch(null, actions)
     expect(lastState.x).to.eq(3)
     expect(lastState.y).to.eq(-1)

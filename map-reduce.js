@@ -28,7 +28,11 @@ const reducer = (state, action) => {
 }
 
 const dispatch = (state, actions) => {
-  return actions.reduce(reducer, state)
+  let initialState = state || {
+    x: 0,
+    y: 0
+  }
+  return actions.reduce(reducer, initialState)
 }
 
 module.exports = {
