@@ -34,9 +34,9 @@ describe('reducer in action!', () => {
   })
 
   it('has default state {0, 0}', () => {
-    let lastState = dispatch(actions)
-    expect(lastState.position.x).to.eq(3)
-    expect(lastState.position.y).to.eq(-1)
+    let lastState = dispatch([]) // don't move
+    expect(lastState.position.x).to.eq(0)
+    expect(lastState.position.y).to.eq(0)
   })
 
   it('store historical movement', () => {
