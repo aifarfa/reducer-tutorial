@@ -1,5 +1,5 @@
 'use strict'
-// const _ = require('lodash')
+const assign = require('object-assign')
 
 const defaultState = {
   history: [],
@@ -8,9 +8,10 @@ const defaultState = {
     y: 0
   }
 }
+
 const reducer = (state, action) => {
   let nextState = {
-    history: state.history,
+    history: state.history.concat([]), // returns new array
     position: {
       x: state.position.x,
       y: state.position.y
@@ -33,7 +34,7 @@ const reducer = (state, action) => {
     default:
       break;
   }
-  console.log(nextState.position)
+  // console.log(nextState.position)
   nextState.history.push(state.position)
 
   return nextState;
@@ -46,7 +47,8 @@ const reducer = (state, action) => {
 // const scaleY = action => action.type === 'UP' ? action.value : -action.value
 
 const dispatch = (state, actions) => {
-  state = state || defaultState
+  state = state || {}
+  const initialState = assign(state, defaultState)
 
   // const addDistance = (current, value) => current + value
   // const vectorX = actions
@@ -61,7 +63,7 @@ const dispatch = (state, actions) => {
 
   // console.log('move X ->', vectorX)
   // console.log('move Y ->', vectorY)
-  const nextState = actions.reduce(reducer, state)
+  const nextState = actions.reduce(reducer, initialState)
   return nextState
 }
 

@@ -33,6 +33,7 @@ describe('reducer in action!', () => {
 
   it('returns correct final state', () => {
     let lastState = dispatch(this.initialState, actions)
+    console.log(lastState.position)
 
     expect(lastState.position.x).to.eq(3)
     expect(lastState.position.y).to.eq(-1)
@@ -55,12 +56,19 @@ describe('reducer in action!', () => {
     let lastState = dispatch(this.initialState, actions)
     let history = lastState.history
 
-    // console.log(history)
+    console.log(history)
     expect(history.length).to.eq(4)
     expect(history[0].x).to.eq(0)
     expect(history[1].x).to.eq(0)
     expect(history[2].x).to.eq(2)
     expect(history[3].x).to.eq(2)
+  })
+
+  it("doesn't mutate previous state", () => {
+    let lastState = dispatch(this.initialState, actions)
+    let history = lastState.history
+    expect(history).to.not.eq(this.initialState.history)
+    expect(this.initialState.history.length).to.eq(0)
   })
 
 });
