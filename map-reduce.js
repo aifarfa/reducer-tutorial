@@ -9,14 +9,18 @@ const defaultState = {
   }
 }
 
-const reducer = (state, action) => {
-  let nextState = {
+const cloneState = state => {
+  return {
     history: state.history.concat([]), // returns new array
     position: {
       x: state.position.x,
       y: state.position.y
     }
   }
+}
+
+const reducer = (state, action) => {
+  let nextState = cloneState(state)
 
   switch (action.type) {
     case 'LEFT':
