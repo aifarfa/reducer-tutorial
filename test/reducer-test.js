@@ -1,13 +1,18 @@
 'use strict'
-
-const dispatcher = require('../map-reduce')
-const dispatch = dispatcher.dispatch
 const chai = require('chai')
 const expect = chai.expect
 
 describe('reducer in action!', () => {
 
-  const actions = [{
+  const initialState = {
+    history: [],
+    position: {
+      x: 0,
+      y: 0
+    }
+  }
+
+  let actions = [{
     type: 'UP',
     value: 1
   }, {
@@ -21,20 +26,28 @@ describe('reducer in action!', () => {
     value: 1
   }]
 
-  beforeEach(() => {
+  let dispatch;
+  let reducer;
 
+  beforeEach(() => {
+    reducer = require('../reducers');
+    dispatch = () => {
+      return actions.reduce(reducer, initialState)
+    }
   })
 
   it('returns correct final state', () => {
     let lastState = dispatch(actions)
-    console.log(lastState.position)
-
+    // console.log(lastState.position)
     expect(lastState.position.x).to.eq(3)
     expect(lastState.position.y).to.eq(-1)
   })
 
   it('has default state {0, 0}', () => {
-    let lastState = dispatch([]) // don't move
+    let action = {
+      type: 'STOP'
+    };
+    let lastState = reducer(initialState, action); // don't move
     expect(lastState.position.x).to.eq(0)
     expect(lastState.position.y).to.eq(0)
   })
@@ -43,7 +56,7 @@ describe('reducer in action!', () => {
     let lastState = dispatch(actions)
     let history = lastState.history
 
-    console.log(history)
+    // console.log(history)
     expect(history.length).to.eq(4)
     expect(history[0].x).to.eq(0)
     expect(history[1].x).to.eq(0)
@@ -52,13 +65,17 @@ describe('reducer in action!', () => {
   })
 
   it("doesn't mutate previous state", () => {
-    let firstState = dispatch(actions)
-    let moreAction = {
+    let action = {
       type: 'UP',
       value: 5
     }
-    let secondState = dispatch([moreAction])
-    expect(firstState).to.not.eql(secondState)
+    let state = dispatch(actions)
+    let nextState = reducer(state, action)
+    // console.log(state.position)
+    // console.log(nextState.position)
+    expect(state).to.not.eql(nextState)
+    expect(nextState.history.length).to.eq(5)
+    expect(nextState.history[4]).to.eq(state.position)
   })
 
 });
